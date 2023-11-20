@@ -3,7 +3,14 @@ function pay(bot, chatId) {
 
 
 	bot.on('callback_query', msg => {
-		console.log(msg)
+		bot.sendMessage(chatId, msg.data)
+		// const data = msg.data
+		// if (data == 'qiwi') {
+		// 	bot.sendMessage(chatId, `qiwi`)
+		// } else if (data == 'bank') {
+		// 	bot.sendMessage(chatId, `bank`)
+		// }
+		bot.removeListener('callback_query')
 	})
 }
 

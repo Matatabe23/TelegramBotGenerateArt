@@ -6,13 +6,15 @@ const { Balance } = require('../comandsBot/Balance')
 const { Help } = require('../comandsBot/Help')
 const { Generate } = require('../comandsBot/Generate')
 const { pay } = require('../comandsBot/pay')
+const { usagePolicy } = require('../comandsBot/usagePolicy')
 
 const commands = [
 	{ command: '/start', description: 'Начать' },
+	{ command: '/pay', description: 'Пополнить счет' },
 	{ command: '/help', description: 'Помощь' },
 	{ command: '/balance', description: 'Баланс' },
 	{ command: '/generate', description: 'Генерировать картинки' },
-	{ command: '/pay', description: 'Пополнить счет' },
+	{ command: '/usagepolicy', description: 'Политика использования' },
 ];
 
 bot.setMyCommands(commands).then(() => {
@@ -64,6 +66,10 @@ bot.on('message', async msg => {
 
 	else if (text === '/pay') {
 		pay(bot, chatId, text)
+	} 
+
+	else if (text === '/usagepolicy') {
+		usagePolicy(bot, chatId)
 	} 
 	
 	else {
