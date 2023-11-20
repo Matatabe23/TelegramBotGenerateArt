@@ -18,6 +18,12 @@ function examples(bot, chatId) {
       caption:
         'girl, perfect anatomy, medium breasts, yellow hair, red hair tips, orange eyes, paired katanas, bright smile, fiery cloak, night sky with moon, black dress with short skirt, full-length view, looks at the viewer, holds a katana over his head.',
     },
+		{
+      type: 'photo',
+      media: './arts/examples/examples_4.png',
+      caption:
+        'Man, perfect anatomy, black hair, red eyes, business suit, katana in hand, body covered with lightning, evil smile, night, blood on his face.',
+    },
   ];
 
   bot.sendChatAction(chatId, 'typing');

@@ -1,12 +1,10 @@
-const {Sequelize} = require('sequelize')
+const sqlite3 = require('sqlite3').verbose();
+const { Sequelize } = require('sequelize');
 
-module.exports = new Sequelize(
-	process.env.DB_NAME, //Название БД
-	process.env.DB_USER, //Пользователь
-	process.env.DB_PASSWORD, //Пароль
-	{
-		dialect: 'postgres',
-		host: process.env.DB_HOST,
-		port: process.env.DB_PORT
-	}
-)
+// Создание экземпляра базы данных SQLite
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: './Main.db' // Путь к файлу базы данных SQLite
+});
+
+module.exports = sequelize;

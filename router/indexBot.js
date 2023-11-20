@@ -25,14 +25,6 @@ bot.setMyCommands(commands).then(() => {
 	console.error('Ошибка при установке команд:', error.message);
 });
 
-// const comandButton = {
-// 	reolay_markup: JSON.stringify({
-// 		inline_keyboard: [
-// 			[{text: 'Текст кнопки'}],
-// 		]
-// 	})
-// }
-
 let generateComand = false
 
 bot.on('message', async msg => {
@@ -40,6 +32,8 @@ bot.on('message', async msg => {
 	const sistemName = msg.from.username;
 	const chatId = msg.chat.id;
 	const text = msg.text;
+
+	console.log(msg.from.id)
 
 
 	if (text === '/start') {
