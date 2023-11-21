@@ -1,13 +1,26 @@
-const fs = require('fs');
-const { examples } = require('../models/models');
+const { examples } = require('../models/models')
 
-function Balance(bot, chatId) {
-  const photoUrl = 'https://localhost:5000/examples/1'; // Замените на фактическую ссылку на фото
+async function Balance(bot, chatId) {
+	try {
+		const photo = await examples.findOne({
+			where: { id: 4 },
+			attributes: ['examplesImage']
+		});
+		const NewPhoto = photo.dataValues.examplesImage
+		console.log(NewPhoto)
 
-bot.sendPhoto(chatId, photoUrl);
+		if (photo) {
 
+			bot.sendPhoto(chatId, NewPhoto);
+		} else {
+			
+		}
+	} catch (error) {
+		console.error('Ошибка при выполнении запроса к базе данных:', error);
+		// ...
+	}
 }
 
 module.exports = {
-  Balance
+	Balance
 }

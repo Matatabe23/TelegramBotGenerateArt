@@ -13,7 +13,6 @@ const User = sequelize.define('user', {
 const examples = sequelize.define('examples', {
 	id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 	type: {type: DataTypes.STRING},
-	Image_url: {type: DataTypes.INTEGER},
 	examplesImage: { type: DataTypes.BLOB },
 	examplesText: { type: DataTypes.TEXT },
 })
