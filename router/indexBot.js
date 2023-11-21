@@ -33,7 +33,7 @@ bot.on('message', async msg => {
 	const chatId = msg.chat.id;
 	const text = msg.text;
 
-	console.log(msg.from.id)
+	// console.log(msg.from.id)
 
 
 	if (text === '/start') {
