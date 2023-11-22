@@ -7,7 +7,7 @@ const { Help } = require('../comandsBot/Help')
 const { Generate } = require('../comandsBot/Generate')
 const { pay } = require('../comandsBot/pay')
 const { usagePolicy } = require('../comandsBot/usagePolicy')
-const { examples } = require("../comandsBot/examples")
+const { Examples } = require("../comandsBot/Examples")
 
 const commands = [
 	{ command: '/start', description: 'Начать' },
@@ -68,7 +68,7 @@ bot.on('message', async msg => {
 		usagePolicy(bot, chatId)
 	} 
 	else if (text === '/examples'){
-		examples(bot, chatId)
+		Examples(bot, chatId)
 	}
 	
 	else {

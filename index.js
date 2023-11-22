@@ -34,14 +34,15 @@ start()
 
 
 const { examples } = require('./models/models')
-const cd = fs.readFileSync('./arts/examples/examples_4.png')
+const cd = fs.readFileSync('./arts/examples/examples_7.png')
 
 function pushDataBase() {
 	const newExample = examples.create({
 		type: 'photo',
 		examplesImage: cd,
-		examplesText: 'Man, perfect anatomy, black hair, red eyes, business suit, katana in hand, body covered with lightning, evil smile, night, blood on his face.'
+		examplesText: 'Man, swinging a two-handed sword, in armor, black hair, short haircut, green eyes, covered in blood, background battlefield, screaming, black armor, drops of blood in the air.'
 	});
+	console.log('Успешное сохранение в базу данных examples')
 }
 
 //  pushDataBase() 
