@@ -2,15 +2,11 @@ const { examples } = require('../models/models')
 
 async function Balance(bot, chatId) {
 	try {
-		const photo = await examples.findOne({
-			where: { id: 4 },
-			attributes: ['examplesImage']
-		});
+		const photo = await examples.findOne({});
 		const NewPhoto = photo.dataValues.examplesImage
 		console.log(NewPhoto)
 
-		if (photo) {
-
+		if (NewPhoto) {
 			bot.sendPhoto(chatId, NewPhoto);
 		} else {
 			

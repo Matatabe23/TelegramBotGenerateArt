@@ -21,18 +21,29 @@ app.use('/api', router) // Используем маршрутизатор
 
 
 const start = async () => {
-  try {
-    await sequelize.authenticate() // Аутентификация в базе данных
-    await sequelize.sync() // Синхронизация моделей с базой данных
-    app.listen(PORT, () => console.log(`Server started on port ${PORT}`)) // Запуск сервера на указанном порту
-  } catch (e) {
-    console.log(e) // Вывод ошибки при возникновении исключений
-  }
+	try {
+		await sequelize.authenticate() // Аутентификация в базе данных
+		await sequelize.sync() // Синхронизация моделей с базой данных
+		app.listen(PORT, () => console.log(`Server started on port ${PORT}`)) // Запуск сервера на указанном порту
+	} catch (e) {
+		console.log(e) // Вывод ошибки при возникновении исключений
+	}
 }
 
 start()
 
 
-const cd = fs.readFileSync('./arts/examples/examples_1.png')
-console.log(cd)
+const { examples } = require('./models/models')
+const cd = fs.readFileSync('./arts/examples/examples_4.png')
+
+function pushDataBase() {
+	const newExample = examples.create({
+		type: 'photo',
+		examplesImage: cd,
+		examplesText: 'Man, perfect anatomy, black hair, red eyes, business suit, katana in hand, body covered with lightning, evil smile, night, blood on his face.'
+	});
+}
+
+//  pushDataBase() 
+
 
