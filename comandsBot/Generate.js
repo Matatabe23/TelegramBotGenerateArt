@@ -4,11 +4,11 @@ const fs = require('fs');
 function Generate(bot, chatId, text) {
 	data = {
 		'api_key': process.env.API_KEY,
-		'model': 'Akasha: Anime',
-		'prompt': text,
+		'model': 'Vibrance',
+		'prompt': text.replace("/generate", ""),
 		'negative_prompt': '',
 		'width': 512,
-		'height': 512,
+		'height': 768,
 		'steps': 28,
 		'cfg_scale': 12
 	}

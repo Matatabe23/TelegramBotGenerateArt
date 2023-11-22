@@ -34,13 +34,13 @@ start()
 
 
 const { examples } = require('./models/models')
-const cd = fs.readFileSync('./arts/examples/examples_7.png')
+const cd = fs.readFileSync('./arts/examples/examples_8.png')
 
 function pushDataBase() {
 	const newExample = examples.create({
 		type: 'photo',
 		examplesImage: cd,
-		examplesText: 'Man, armor, sword, face covered in blood, the background of the battlefield.',
+		examplesText: 'cat girl, white hair, blue eyes, bikini, big breasts, perfect anatomy, cute face, night.',
 		Creator: 'Qugor',
 		CreatorBool: true
 	});

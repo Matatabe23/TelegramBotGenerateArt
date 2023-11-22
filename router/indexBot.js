@@ -8,6 +8,7 @@ const { Generate } = require('../comandsBot/Generate')
 const { pay } = require('../comandsBot/pay')
 const { usagePolicy } = require('../comandsBot/usagePolicy')
 const { Examples } = require("../comandsBot/Examples")
+const { Settings } = require('../comandsBot/Settings')
 
 const commands = [
 	{ command: '/start', description: 'Начать' },
@@ -15,9 +16,10 @@ const commands = [
 	{ command: '/help', description: 'Помощь' },
 	{ command: '/balance', description: 'Баланс' },
 	{ command: '/generate', description: 'Генерировать картинки' },
+	{ command: '/settings', description: 'Настройки' },
 	{ command: '/usagepolicy', description: 'Политика использования' },
 	{ command: '/examples', description: 'Примеры работ' },
-];
+]
 
 bot.setMyCommands(commands).then(() => {
 	console.log('Команды успешно установлены');
@@ -37,37 +39,27 @@ bot.on('message', async msg => {
 
 	if (text === '/start') {
 		Start(bot, chatId, name, UserId, sistemName)
-		generateComand = false
 	}
-	
 	else if (text === '/balance') {
 		Balance(bot, chatId, UserId)
-		generateComand = false
 	}
-	
 	else if (text === '/help') {
 		Help(bot, chatId)
-		generateComand = false
 	} 
-	
 	else if (text === '/generate') {
-		generateComand = true
-		bot.sendMessage(chatId, 'Опиши картинку которую ты хочешь получить')
-	} 
-
-	else if (generateComand == true) {
 		Generate(bot, chatId, text)
 	} 
-
 	else if (text === '/pay') {
 		pay(bot, chatId, text)
 	} 
-
 	else if (text === '/usagepolicy') {
 		usagePolicy(bot, chatId)
 	} 
 	else if (text === '/examples'){
-		Examples(bot, chatId)
+		Examples(bot, chatId, UserId)
+	}
+	else if (text === '/settings'){
+		Settings(bot, chatId, UserId)
 	}
 	
 	else {

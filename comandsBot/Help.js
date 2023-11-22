@@ -4,7 +4,7 @@ function Help(bot, chatId) {
 		bot.sendMessage(chatId, `Узнать баланс: /balance`)
 	}, 100);
 	setTimeout(() => {
-		bot.sendMessage(chatId, `Сгенерировать картинку: /generate.`)
+		bot.sendMessage(chatId, `Сгенерировать картинку: /generate Ваше описание.`)
 	}, 200);
 	setTimeout(() => {
 		bot.sendMessage(chatId, `Что бы картинка была приближенна к задуманному результату, применяй данные советы: 'Используй английский язык, пиши критерии через запятую(Cat girl, black heir, red eyes...)'`)
