@@ -1,20 +1,8 @@
-const { examples } = require('../models/models')
+const { User } = require('../models/models')
 
-async function Balance(bot, chatId) {
-	try {
-		const photo = await examples.findOne({});
-		const NewPhoto = photo.dataValues.examplesImage
-		console.log(NewPhoto)
-
-		if (NewPhoto) {
-			bot.sendPhoto(chatId, NewPhoto);
-		} else {
-			
-		}
-	} catch (error) {
-		console.error('Ошибка при выполнении запроса к базе данных:', error);
-		// ...
-	}
+async function Balance(bot, chatId, UserId) {
+	const user = await User.findOne({ where: { idTelegram: UserId } });
+	bot.sendMessage(chatId, `Семпай, твой баланс: ${user.dataValues.Crystal}`)
 }
 
 module.exports = {

@@ -15,7 +15,7 @@ const sequelize = require('../db')
 class UserController {
 	// Метод для регистрации нового пользователя
 	async registration(req, res, next) {
-		const { email, name, password, role } = req.body // Получаем данные пользователя из запроса
+		
 
 
 		return res.json({ token }) // Отправляем токен в ответ на запрос

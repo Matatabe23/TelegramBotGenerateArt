@@ -28,21 +28,20 @@ bot.setMyCommands(commands).then(() => {
 let generateComand = false
 
 bot.on('message', async msg => {
-	const name = msg.from.first_name;
-	const sistemName = msg.from.username;
-	const chatId = msg.chat.id;
-	const text = msg.text;
-
-	// console.log(msg.from.id)
+	const name = msg.from.first_name; // Отображаемое имя
+	const sistemName = msg.from.username; //Имя для поиска в телеграмме 
+	const chatId = msg.chat.id; //Айди чата
+	const UserId = msg.from.id //Айди пользователя
+	const text = msg.text; //Текст
 
 
 	if (text === '/start') {
-		Start(bot, chatId, name)
+		Start(bot, chatId, name, UserId, sistemName)
 		generateComand = false
 	}
 	
 	else if (text === '/balance') {
-		Balance(bot, chatId)
+		Balance(bot, chatId, UserId)
 		generateComand = false
 	}
 	

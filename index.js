@@ -40,7 +40,9 @@ function pushDataBase() {
 	const newExample = examples.create({
 		type: 'photo',
 		examplesImage: cd,
-		examplesText: 'Man, swinging a two-handed sword, in armor, black hair, short haircut, green eyes, covered in blood, background battlefield, screaming, black armor, drops of blood in the air.'
+		examplesText: 'Man, armor, sword, face covered in blood, the background of the battlefield.',
+		Creator: 'Qugor',
+		CreatorBool: true
 	});
 	console.log('Успешное сохранение в базу данных examples')
 }

@@ -6,7 +6,11 @@ async function Examples(bot, chatId) {
 	const randomArt = allItems[randomIndex].id;
 
 	const ex = await examples.findByPk(randomArt);
-	bot.sendPhoto(chatId, ex.dataValues.examplesImage, { caption: ex.dataValues.examplesText });
+
+	const createrAvtop = ex.dataValues.CreatorBool ? ex.dataValues.Creator : 'Анонимный пользователь'
+	const TEXT = `${ex.dataValues.examplesText}\n \nАвтор и владелец арта: ${createrAvtop}`
+
+	bot.sendPhoto(chatId, ex.dataValues.examplesImage, { caption: TEXT });
 }
 
 	module.exports = {
