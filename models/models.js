@@ -21,7 +21,19 @@ const examples = sequelize.define('examples', {
 	CreatorBool: {type: DataTypes.BOOLEAN, defaultValue: false}
 })
 
+const UserSettings = sequelize.define('userSettings', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  model: { type: DataTypes.STRING },
+  width: { type: DataTypes.STRING },
+  height: { type: DataTypes.STRING },
+  steps: { type: DataTypes.STRING },
+  scale: { type: DataTypes.STRING },
+});
+
+UserSettings.belongsTo(User);
+
 module.exports = {
 	User,
-	examples
+	examples,
+	UserSettings
 }

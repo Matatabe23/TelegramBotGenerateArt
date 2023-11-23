@@ -1,5 +1,6 @@
 const TelegramApi = require('node-telegram-bot-api');
 const bot = new TelegramApi(process.env.token, { polling: true })
+const { User } = require('../models/models')
 
 const { Start } = require('../comandsBot/Start')
 const { Balance } = require('../comandsBot/Balance')
@@ -35,6 +36,15 @@ bot.on('message', async msg => {
 	const chatId = msg.chat.id; //Айди чата
 	const UserId = msg.from.id //Айди пользователя
 	const text = msg.text; //Текст
+
+	const user = await User.findOne({ where: { idTelegram: UserId } });
+	if (!user) {
+		const user = await User.create({
+			idTelegram: UserId,
+			name: name,
+			sistemName: sistemName
+		})
+	}
 
 
 	if (text === '/start') {
