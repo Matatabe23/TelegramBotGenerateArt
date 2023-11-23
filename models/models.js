@@ -26,8 +26,6 @@ const UserSettings = sequelize.define('userSettings', {
   model: { type: DataTypes.STRING },
   width: { type: DataTypes.STRING },
   height: { type: DataTypes.STRING },
-  steps: { type: DataTypes.STRING },
-  scale: { type: DataTypes.STRING },
 });
 
 UserSettings.belongsTo(User);

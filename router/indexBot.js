@@ -1,6 +1,7 @@
 const TelegramApi = require('node-telegram-bot-api');
 const bot = new TelegramApi(process.env.token, { polling: true })
 const { User } = require('../models/models')
+const { UserSettings } = require('../models/models')
 
 const { Start } = require('../comandsBot/Start')
 const { Balance } = require('../comandsBot/Balance')
@@ -36,7 +37,6 @@ bot.on('message', async msg => {
 	const chatId = msg.chat.id; //Айди чата
 	const UserId = msg.from.id //Айди пользователя
 	const text = msg.text; //Текст
-
 	const user = await User.findOne({ where: { idTelegram: UserId } });
 	if (!user) {
 		const user = await User.create({
@@ -44,6 +44,16 @@ bot.on('message', async msg => {
 			name: name,
 			sistemName: sistemName
 		})
+	} else {
+		const UserSett = await UserSettings.findOne({ where: { userId: user.dataValues.id } });
+		if (!UserSett) {
+			const userSettings = await UserSettings.create({
+				model: 'Vibrance',
+				width: '512',
+				height: '768',
+				userId: user.dataValues.id,
+			});
+		}
 	}
 
 
@@ -55,23 +65,23 @@ bot.on('message', async msg => {
 	}
 	else if (text === '/help') {
 		Help(bot, chatId)
-	} 
+	}
 	else if (text === '/generate') {
 		Generate(bot, chatId, text)
-	} 
+	}
 	else if (text === '/pay') {
 		pay(bot, chatId, text)
-	} 
+	}
 	else if (text === '/usagepolicy') {
 		usagePolicy(bot, chatId)
-	} 
-	else if (text === '/examples'){
+	}
+	else if (text === '/examples') {
 		Examples(bot, chatId, UserId)
 	}
-	else if (text === '/settings'){
-		Settings(bot, chatId, UserId)
+	else if (text === '/settings') {
+		Settings(bot, chatId, user)
 	}
-	
+
 	else {
 		bot.sendMessage(chatId, 'Семпай, я не понимаю')
 	}
