@@ -1,39 +1,42 @@
 const axios = require('axios');
-const fs = require('fs');
+const { UserSettings } = require('../models/models');
 
-function Generate(bot, chatId, text) {
-	data = {
-		'api_key': process.env.API_KEY,
-		'model': 'Vibrance',
-		'prompt': text.replace("/generate", ""),
-		'negative_prompt': '',
-		'width': 512,
-		'height': 768,
-		'steps': 28,
-		'cfg_scale': 12
+const API_KEY = 'secret-6b7cfcc5-ad87-4d1e-a840-907374d9deaf';
+const url = 'https://holara.ai/holara/api/external/1.0/generate_image';
+
+async function Generate(bot, chatId, user, text) {
+	const UserSett = await UserSettings.findOne({ where: { userId: user.dataValues.id } });
+
+	 data = {
+		api_key: 'secret-6b7cfcc5-ad87-4d1e-a840-907374d9deaf',
+		model: UserSett.dataValues.model,
+		prompt: '1girl, solo, black hair, red eyes, snowing, long hair, fox ears',
+		negative_prompt: '',
+		width: UserSett.dataValues.width,
+		height: UserSett.dataValues.height,
+		steps: 28,
+		cfg_scale: 12,
+	};
+
+
+	const newData = JSON.stringify(data).replace(/"/g, "'").replace(/:/g, ': ').replace(/,/g, ', ');
+	console.log(newData)
+
+	try {
+		const response = await axios.post(url, newData);
+		console.log(response.data)
+		if (response.status !== 200) {
+			console.log(`Error: ${response.status} ${response.data}`);
+		} else {
+			const imageData = response.data.images[0];
+			const imageBuffer = Buffer.from(imageData, 'base64');
+			// Handle the image buffer as needed
+		}
+	} catch (error) {
+		console.log('Error:', error.message);
 	}
-
-	axios.post(process.env.url, data)
-		.then((response) => {
-			if (response.status !== 200) {
-				console.log(`Error: ${response.status} ${response.data}`);
-			} else {
-				const responseData = response.data;
-				console.log(`Status: ${responseData.status}`);
-				console.log(`Execution Time: ${Math.round(responseData.execution_time * 100) / 100}s`);
-				console.log(`Generation Cost: ${responseData.generation_cost}`);
-				console.log(`Hologems Remaining: ${responseData.hologems_remaining}`);
-
-				const imageBase64 = responseData.images[0];
-				const image = Buffer.from(imageBase64, 'base64');
-				fs.writeFileSync('image.png', image);
-			}
-		})
-		.catch((error) => {
-			console.error('Error:', error.message);
-		});
 }
 
 module.exports = {
-	Generate
-}
+	Generate,
+};

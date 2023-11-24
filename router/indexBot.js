@@ -29,14 +29,13 @@ bot.setMyCommands(commands).then(() => {
 	console.error('Ошибка при установке команд:', error.message);
 });
 
-let generateComand = false
-
 bot.on('message', async msg => {
 	const name = msg.from.first_name; // Отображаемое имя
 	const sistemName = msg.from.username; //Имя для поиска в телеграмме 
 	const chatId = msg.chat.id; //Айди чата
 	const UserId = msg.from.id //Айди пользователя
 	const text = msg.text; //Текст
+
 	const user = await User.findOne({ where: { idTelegram: UserId } });
 	if (!user) {
 		const user = await User.create({
@@ -66,8 +65,8 @@ bot.on('message', async msg => {
 	else if (text === '/help') {
 		Help(bot, chatId)
 	}
-	else if (text === '/generate') {
-		Generate(bot, chatId, text)
+	else if (text.startsWith('/generate')) {
+		Generate(bot, chatId, user, text)
 	}
 	else if (text === '/pay') {
 		pay(bot, chatId, text)

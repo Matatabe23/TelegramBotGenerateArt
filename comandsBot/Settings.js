@@ -76,10 +76,7 @@ async function Settings(bot, chatId, user) {
 		bot.sendMessage(chatId, 'Настройки успешно применяны.')
 		bot.removeListener('callback_query');
 	}
-
 }
-
-
 
 const comandButton = {
 	reply_markup: JSON.stringify({
@@ -91,7 +88,6 @@ const comandButton = {
 		],
 	}),
 };
-
 const model = {
 	reply_markup: JSON.stringify({
 		inline_keyboard: [
