@@ -1,42 +1,36 @@
-const axios = require('axios');
-const { UserSettings } = require('../models/models');
+const { promisify } = require('util');
+const { exec } = require('child_process');
+const { UserSettings } = require('../models/models')
 
-const API_KEY = 'secret-6b7cfcc5-ad87-4d1e-a840-907374d9deaf';
-const url = 'https://holara.ai/holara/api/external/1.0/generate_image';
+// Преобразование функции exec в промис
+const execPromise = promisify(exec);
 
 async function Generate(bot, chatId, user, text) {
-	const UserSett = await UserSettings.findOne({ where: { userId: user.dataValues.id } });
+  const UserSett = await UserSettings.findOne({ where: { userId: user.dataValues.id } });
+  const data = {
+    'api_key': process.env.API_KEY,
+    'model': UserSett.model,
+    'num_images': 1,
+    'prompt': text.replace('/generate', ''),
+    'negative_prompt': '',
+    'width': UserSett.width,
+    'height': UserSett.height,
+    'steps': 28,
+    'cfg_scale': 12,
+  };
+  const pythonScript = `python comandsBot/generate.py ${JSON.stringify(data)}`;
 
-	 data = {
-		api_key: 'secret-6b7cfcc5-ad87-4d1e-a840-907374d9deaf',
-		model: UserSett.dataValues.model,
-		prompt: '1girl, solo, black hair, red eyes, snowing, long hair, fox ears',
-		negative_prompt: '',
-		width: UserSett.dataValues.width,
-		height: UserSett.dataValues.height,
-		steps: 28,
-		cfg_scale: 12,
-	};
-
-
-	const newData = JSON.stringify(data).replace(/"/g, "'").replace(/:/g, ': ').replace(/,/g, ', ');
-	console.log(newData)
-
-	try {
-		const response = await axios.post(url, newData);
-		console.log(response.data)
-		if (response.status !== 200) {
-			console.log(`Error: ${response.status} ${response.data}`);
-		} else {
-			const imageData = response.data.images[0];
-			const imageBuffer = Buffer.from(imageData, 'base64');
-			// Handle the image buffer as needed
-		}
-	} catch (error) {
-		console.log('Error:', error.message);
-	}
+  try {
+    // Вызов скрипта Python и ожидание результата
+    const { stdout } = await execPromise(pythonScript);
+    console.log(`Результат выполнения скрипта Python:\n${stdout}`);
+    return stdout;
+  } catch (error) {
+    console.error(`Ошибка выполнения скрипта Python: ${error}`);
+    throw error;
+  }
 }
 
 module.exports = {
-	Generate,
+  Generate,
 };
