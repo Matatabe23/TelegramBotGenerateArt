@@ -55,6 +55,7 @@ bot.on('message', async msg => {
 		}
 	}
 
+	console.log(user)
 
 	if (text === '/start') {
 		Start(bot, chatId, name, UserId, sistemName)

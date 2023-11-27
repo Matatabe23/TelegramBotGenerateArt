@@ -26,12 +26,23 @@ const UserSettings = sequelize.define('userSettings', {
   model: { type: DataTypes.STRING },
   width: { type: DataTypes.STRING },
   height: { type: DataTypes.STRING },
+	Cost: {type: DataTypes.INTEGER}
 });
 
+const UserImages = sequelize.define('UserImages', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+	image: {type: DataTypes.BLOB},
+	Description: {type: DataTypes.TEXT},
+	FreeAccess: {type: DataTypes.BOOLEAN, defaultValue: false},
+	AuthorName: {type: DataTypes.STRING}
+});
+
+UserImages.belongsTo(User);
 UserSettings.belongsTo(User);
 
 module.exports = {
 	User,
 	examples,
-	UserSettings
+	UserSettings,
+	UserImages
 }
