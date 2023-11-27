@@ -48,13 +48,19 @@ async function Settings(bot, chatId, user) {
 		bot.on('callback_query', async msg => {
 			const data = msg.data;
 			if (data == '512 x 512') {
-				SetSize('512', '512', 6)
-			} else if (data == '512 x 768') {
-				SetSize('512', '768', 8)
+				SetSize('512', '512', 5)
 			} else if (data == '768 x 768') {
-				SetSize('768', '768', 10)
+				SetSize('768', '768', 9)
 			} else if (data == '1152 x 1152') {
-				SetSize('1152', '1152', 14)
+				SetSize('1152', '1152', 21)
+			} else if (data == '512 x 768') {
+				SetSize('512', '768', 7)
+			} else if (data == '768 x 1152') {
+				SetSize('768', '1152', 13)
+			} else if (data == '768 x 512') {
+				SetSize('768', '512', 7)
+			} else if (data == '1152 x 768') {
+				SetSize('1152', '768', 13)
 			}
 		});
 	} catch (e) {
@@ -111,12 +117,19 @@ const Size = {
 	reply_markup: JSON.stringify({
 		inline_keyboard: [
 			[
-				{ text: '512 x 512', callback_data: '512 x 512' },
-				{ text: '512 x 768', callback_data: '512 x 768' },
+				{ text: '512 x 512(Квадратная)', callback_data: '512 x 512' },
 			],
 			[
-				{ text: '768 x 768', callback_data: '768 x 768' },
-				{ text: '1152 x 1152', callback_data: '1152 x 1152' },
+				{ text: '768 x 768(Квадратная)', callback_data: '768 x 768' },
+				{ text: '1152 x 1152(Квадратная)', callback_data: '1152 x 1152' },
+			],
+			[
+				{ text: '512 x 768(Портретная)', callback_data: '512 x 768' },
+				{ text: '768 x 1152(Портретная)', callback_data: '768 x 1152' },
+			],
+			[
+				{ text: '768 x 512(Альбомная)', callback_data: '768 x 512' },
+				{ text: '1152 x 768(Пейзажная)', callback_data: '1152 x 768' },
 			],
 		],
 	}),

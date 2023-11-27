@@ -38,7 +38,7 @@ bot.on('message', async msg => {
 
 	const user = await User.findOne({ where: { idTelegram: UserId } });
 	if (!user) {
-		const user = await User.create({
+		await User.create({
 			idTelegram: UserId,
 			name: name,
 			sistemName: sistemName
@@ -46,16 +46,15 @@ bot.on('message', async msg => {
 	} else {
 		const UserSett = await UserSettings.findOne({ where: { userId: user.dataValues.id } });
 		if (!UserSett) {
-			const userSettings = await UserSettings.create({
+			await UserSettings.create({
 				model: 'Vibrance',
 				width: '512',
 				height: '768',
+				Cost: '7',
 				userId: user.dataValues.id,
 			});
 		}
 	}
-
-	console.log(user)
 
 	if (text === '/start') {
 		Start(bot, chatId, name, UserId, sistemName)

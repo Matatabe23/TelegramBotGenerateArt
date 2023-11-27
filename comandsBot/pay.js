@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 async function pay(bot, chatId) {
 	bot.removeListener('callback_query');
 	const paragraphs = [
@@ -9,15 +11,28 @@ async function pay(bot, chatId) {
 		'1000 кристаллов = 400 рублей(Скидка 20%)',
 	];
 	await bot.sendMessage(chatId, paragraphs.join('\n\n'));
-	await bot.sendMessage(chatId, `Семпай, ты готов к покупке?`, comandButton);
+	await bot.sendMessage(chatId, `Ты готов к покупке?`, comandButton);
 
-	bot.on('callback_query', msg => {
+	bot.on('successful_payment', (msg) => {
+		const chatId = msg.chat.id;
+		bot.sendMessage(chatId, 'Платеж успешно выполнен');
+	});
+
+	bot.on('callback_query', async msg => {
 		const data = msg.data;
 		if (data == 'bank') {
-			bot.sendMessage(chatId, `Банковская карта`, Price);
+			await bot.sendInvoice(chatId, 'Покупка кристаллов', 'Покупка кристаллов', 'invoice', '381764678:TEST:72329', 'RUB', [{label: 'Кристаллы', amount: '10000'}]);
 		}
 	});
+
+	bot.on('successful_payment', (msg) => {
+		console.log('Привет');
+	});
 }
+
+
+
+
 
 const comandButton = {
 	reply_markup: JSON.stringify({

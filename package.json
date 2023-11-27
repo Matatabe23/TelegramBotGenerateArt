@@ -22,6 +22,7 @@
     "nodemon": "^3.0.1",
     "python-shell": "^5.0.0",
     "sequelize": "^6.35.1",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "^5.1.6",
+    "yookassa": "^0.1.1"
   }
 }

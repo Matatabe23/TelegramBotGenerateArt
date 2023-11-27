@@ -4,7 +4,6 @@ const { UserSettings, User, UserImages } = require("../models/models")
 const sequelize = require('sequelize');
 
 const url = 'https://holara.ai/holara/api/external/1.0/generate_image';
-const API_KEY = 'secret-6b7cfcc5-ad87-4d1e-a840-907374d9deaf'
 
 async function Generate(bot, chatId, user, text) {
 	const UserSett = await UserSettings.findOne({ where: { userId: user.dataValues.id } });
@@ -21,7 +20,7 @@ async function Generate(bot, chatId, user, text) {
 		{ where: { idTelegram: user.dataValues.idTelegram } }
 	);
 	const data = {
-		"api_key": API_KEY,
+		"api_key": process.env.API_KEY,
 		"model": UserSett.model,
 		"num_images": 1,
 		"prompt": text.replace("/generate", ""),
