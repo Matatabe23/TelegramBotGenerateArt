@@ -1,5 +1,9 @@
 const { UserSettings, User } = require('../models/models');
 
+let message1 = null
+let message2 = null
+let message3 = null
+let message4 = null
 
 async function Settings(bot, chatId, user) {
 	try {
@@ -15,16 +19,20 @@ async function Settings(bot, chatId, user) {
 			'Модель определяет тип картинки более реалистичная или анимешная, фури или картина маслом. Тут можно разгуляться на широкую ногу :)',
 			'Размер влияет на скорость создания, а также качество картинки',
 		];
-		await bot.sendMessage(chatId, Sett.join('\n'));
-		await bot.sendMessage(chatId, paragraphs.join('\n\n'), comandButton);
+		message1 = await bot.sendMessage(chatId, Sett.join('\n'));
+		message2 = await bot.sendMessage(chatId, paragraphs.join('\n\n'), comandButton);
 
 
-		bot.on('callback_query', msg => {
+		bot.on('callback_query', async msg => {
 			const data = msg.data;
 			if (data == 'model') {
-				bot.sendMessage(chatId, `Модель`, model);
+				await bot.deleteMessage(chatId, message1.message_id);
+				await bot.deleteMessage(chatId, message2.message_id);
+				message3 = await bot.sendMessage(chatId, `Модель`, model);
 			} else if (data == 'Size') {
-				bot.sendMessage(chatId, `Размер картинки`, Size);
+				await bot.deleteMessage(chatId, message1.message_id);
+				await bot.deleteMessage(chatId, message2.message_id);
+				message4 = await bot.sendMessage(chatId, `Размер картинки`, Size);
 			}
 		});
 
@@ -32,35 +40,48 @@ async function Settings(bot, chatId, user) {
 		bot.on('callback_query', async msg => {
 			const data = msg.data;
 			if (data == 'Vibrance') {
-				SetModel('Vibrance')
+				await bot.deleteMessage(chatId, message3.message_id);
+				await SetModel('Vibrance')
 			} else if (data == 'Akasha') {
-				SetModel('Akasha')
+				await bot.deleteMessage(chatId, message3.message_id);
+				await SetModel('Akasha')
 			} else if (data == 'Furry') {
-				SetModel('Furry')
+				await bot.deleteMessage(chatId, message3.message_id);
+				await SetModel('Furry')
 			} else if (data == 'Aika') {
-				SetModel('Aika')
+				await bot.deleteMessage(chatId, message3.message_id);
+				await SetModel('Aika')
 			} else if (data == 'Tranquility') {
-				SetModel('Tranquility')
+				await bot.deleteMessage(chatId, message3.message_id);
+				await SetModel('Tranquility')
 			} else if (data == 'Yami') {
-				SetModel('Yami')
+				await bot.deleteMessage(chatId, message3.message_id);
+				await SetModel('Yami')
 			}
 		});
 		bot.on('callback_query', async msg => {
 			const data = msg.data;
 			if (data == '512 x 512') {
-				SetSize('512', '512', 5)
+				await bot.deleteMessage(chatId, message4.message_id);
+				await SetSize('512', '512', 5)
 			} else if (data == '768 x 768') {
-				SetSize('768', '768', 9)
+				await bot.deleteMessage(chatId, message4.message_id);
+				await SetSize('768', '768', 9)
 			} else if (data == '1152 x 1152') {
-				SetSize('1152', '1152', 21)
+				await bot.deleteMessage(chatId, message4.message_id);
+				await SetSize('1152', '1152', 21)
 			} else if (data == '512 x 768') {
-				SetSize('512', '768', 7)
+				await bot.deleteMessage(chatId, message4.message_id);
+				await SetSize('512', '768', 7)
 			} else if (data == '768 x 1152') {
-				SetSize('768', '1152', 13)
+				await bot.deleteMessage(chatId, message4.message_id);
+				await SetSize('768', '1152', 13)
 			} else if (data == '768 x 512') {
-				SetSize('768', '512', 7)
+				await bot.deleteMessage(chatId, message4.message_id);
+				await SetSize('768', '512', 7)
 			} else if (data == '1152 x 768') {
-				SetSize('1152', '768', 13)
+				await bot.deleteMessage(chatId, message4.message_id);
+				await SetSize('1152', '768', 13)
 			}
 		});
 	} catch (e) {

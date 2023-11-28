@@ -6,7 +6,7 @@ const data = [
 async function Start(bot, chatId, name, UserId, sistemName) {
 	await bot.sendChatAction(chatId, 'typing');
 	await bot.sendMessage(chatId, `Привет, ${name}! Я очень рада тебя видеть!`);
-	await bot.sendMessage(chatId, `Я умею генерировать любые аниме картинки. Описывай персонажа четко для получения нужного тебе результата. Лучше всего описание делать на английском языке.\n \nИспользуй /help что бы получить больше информации. \n \nПеред использованием ознакомся с политикой использования /usagepolicy \n \nВот тебе пример:`);
+	await bot.sendMessage(chatId, `Я умею генерировать любые аниме картинки. Описывай персонажа четко для получения нужного тебе результата. Лучше всего описание делать на английском языке.\n \nИспользуй /help что бы получить больше информации. \n \nПеред использованием ознакомся с политикой использования /usagepolicy и политикой конфиденциальности /privacypolicy \n \nВот тебе пример:`);
 	await bot.sendMediaGroup(chatId, data);
 	data.forEach((item, index) => {
 		const id = index + 1;

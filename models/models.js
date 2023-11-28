@@ -9,7 +9,7 @@ const User = sequelize.define('user', {
 	picture: { type: DataTypes.BLOB },
 	name: { type: DataTypes.STRING },
 	role: { type: DataTypes.STRING, defaultValue: "USER" },
-	Crystal: { type: DataTypes.INTEGER, defaultValue: "6"},
+	Crystal: { type: DataTypes.INTEGER, defaultValue: "18"},
 })
 
 const examples = sequelize.define('examples', {

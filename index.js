@@ -17,7 +17,29 @@ app.use(cors()) // Используем middleware для обработки COR
 app.use(express.json()) // Парсим JSON-данные при запросе
 app.use('/api', router) // Используем маршрутизатор
 
+app.post('/webhook', (req, res) => {
+	const { pre_checkout_query } = req.body;
 
+	if (pre_checkout_query) {
+		const queryId = pre_checkout_query.id;
+
+		// Обработка платежа и подтверждение
+		// Ваш код для обработки платежа здесь
+
+		// Ответить на PreCheckoutQuery
+		bot.answerPreCheckoutQuery(queryId, true)
+			.then(() => {
+				console.log('Платеж подтвержден');
+				res.sendStatus(200);
+			})
+			.catch((error) => {
+				console.error('Ошибка при подтверждении платежа:', error);
+				res.sendStatus(500);
+			});
+	} else {
+		res.sendStatus(200);
+	}
+});
 
 
 const start = async () => {
@@ -34,13 +56,13 @@ start()
 
 
 const { examples } = require('./models/models')
-const cd = fs.readFileSync('./arts/examples/examples_8.png')
+const cd = fs.readFileSync('./arts/examples/examples_12.png')
 
 function pushDataBase() {
 	const newExample = examples.create({
 		type: 'photo',
 		examplesImage: cd,
-		examplesText: 'cat girl, white hair, blue eyes, bikini, big breasts, perfect anatomy, cute face, night.',
+		examplesText: 'Girl, magicians robe, perfect anatomy, big breasts, short skirt, white eyes, white hair, white stockings, moon in the background, night.',
 		Creator: 'Qugor',
 		CreatorBool: true
 	});

@@ -8,12 +8,12 @@ const url = 'https://holara.ai/holara/api/external/1.0/generate_image';
 async function Generate(bot, chatId, user, text) {
 	const UserSett = await UserSettings.findOne({ where: { userId: user.dataValues.id } });
 	if (text == '/generate') {
-		bot.sendMessage(chatId, 'Напишите после /generate описания картинки. Пример /generate cat girl, black hair, red eyes...')
-		return
+		bot.sendMessage(chatId, 'Напишите после /generate описания картинки. Пример /generate cat girl, black hair, red eyes...');
+		return;
 	}
 	if (user.dataValues.Crystal < UserSett.dataValues.Cost) {
-		bot.sendMessage(chatId, 'Недостаточно кристаллов, пополните счет')
-		return
+		bot.sendMessage(chatId, 'Недостаточно кристаллов, пополните счет');
+		return;
 	}
 	await User.update(
 		{ Crystal: sequelize.literal(`Crystal - ${UserSett.dataValues.Cost}`) },
@@ -31,6 +31,7 @@ async function Generate(bot, chatId, user, text) {
 		"cfg_scale": 12,
 	};
 
+	const sentMessage = await bot.sendMessage(chatId, 'Загрузка...');
 
 	request.post({ url, form: data }, async (error, response, body) => {
 		if (error) {
@@ -45,8 +46,10 @@ async function Generate(bot, chatId, user, text) {
 				image: image,
 				Description: text.replace("/generate", ""),
 				userId: user.dataValues.id,
+				AuthorName: user.dataValues.name
 			});
-			bot.sendPhoto(chatId, image);
+			await bot.deleteMessage(chatId, sentMessage.message_id); // Удаляем сообщение "Загрузка..."
+			await bot.sendPhoto(chatId, image);
 		}
 	});
 }

@@ -11,6 +11,8 @@ const { pay } = require('../comandsBot/pay')
 const { usagePolicy } = require('../comandsBot/usagePolicy')
 const { Examples } = require("../comandsBot/Examples")
 const { Settings } = require('../comandsBot/Settings')
+const { PrivacyPolicy } = require('../comandsBot/PrivacyPolicy')
+const { support } = require('../comandsBot/support')
 
 const commands = [
 	{ command: '/start', description: 'Начать' },
@@ -20,7 +22,9 @@ const commands = [
 	{ command: '/generate', description: 'Генерировать картинки' },
 	{ command: '/settings', description: 'Настройки' },
 	{ command: '/usagepolicy', description: 'Политика использования' },
+	{ command: '/privacypolicy', description: 'Политика конфиденциальности' },
 	{ command: '/examples', description: 'Примеры работ' },
+	{ command: '/support', description: 'Техническая поддержка' },
 ]
 
 bot.setMyCommands(commands).then(() => {
@@ -65,11 +69,11 @@ bot.on('message', async msg => {
 	else if (text === '/help') {
 		Help(bot, chatId)
 	}
-	else if (text.startsWith('/generate')) {
-		Generate(bot, chatId, user, text)
+	else if (text && text.startsWith('/generate')) {
+		Generate(bot, chatId, user, text);
 	}
 	else if (text === '/pay') {
-		pay(bot, chatId, text)
+		pay(bot, chatId, text, user)
 	}
 	else if (text === '/usagepolicy') {
 		usagePolicy(bot, chatId)
@@ -80,8 +84,10 @@ bot.on('message', async msg => {
 	else if (text === '/settings') {
 		Settings(bot, chatId, user)
 	}
-
-	else {
-		bot.sendMessage(chatId, 'Семпай, я не понимаю')
+	else if (text === '/privacypolicy') {
+		PrivacyPolicy(bot, chatId)
+	}
+	else if (text === '/support') {
+		support(bot, chatId)
 	}
 })
