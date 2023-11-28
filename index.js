@@ -55,16 +55,14 @@ const start = async () => {
 start()
 
 
-const { examples } = require('./models/models')
-const cd = fs.readFileSync('./arts/examples/examples_12.png')
+const { StartPrimer } = require('./models/models')
+const cd = fs.readFileSync('./arts/StartExamples/primer2.png')
 
 function pushDataBase() {
-	const newExample = examples.create({
+	const newExample = StartPrimer.create({
 		type: 'photo',
-		examplesImage: cd,
-		examplesText: 'Girl, magicians robe, perfect anatomy, big breasts, short skirt, white eyes, white hair, white stockings, moon in the background, night.',
-		Creator: 'Qugor',
-		CreatorBool: true
+		image: cd,
+		Description: 'Woman, black hair, devil horns, big horns, perfect anatomy, red eyes, bright burgundy lips, fangs, white shirt, red short skirt, stockings, cute face, big breasts.',
 	});
 	console.log('Успешное сохранение в базу данных examples')
 }
