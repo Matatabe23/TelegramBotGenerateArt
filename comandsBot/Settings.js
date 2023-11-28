@@ -93,7 +93,7 @@ async function Settings(bot, chatId, user) {
 			{ model: NameModel },
 			{ where: { userId: user.dataValues.id } }
 		);
-		bot.sendMessage(chatId, 'Настройки успешно применяны.')
+		bot.sendMessage(chatId, 'Настройки успешно применены.')
 		bot.removeListener('callback_query');
 	}
 	async function SetSize(width, height, Cost) {
@@ -101,7 +101,7 @@ async function Settings(bot, chatId, user) {
 			{ width: width, height: height, Cost: Cost },
 			{ where: { userId: user.dataValues.id } }
 		);
-		bot.sendMessage(chatId, 'Настройки успешно применяны.')
+		bot.sendMessage(chatId, 'Настройки успешно применены.')
 		bot.removeListener('callback_query');
 	}
 }
