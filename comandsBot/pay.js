@@ -6,7 +6,7 @@ const CRYSTAL_PRICE_100 = 10000;
 const CRYSTAL_PRICE_200 = 20000;
 const CRYSTAL_PRICE_400 = 40000;
 
-async function pay(bot, chatId, text, user) {
+async function pay(bot, chatId, text, UserId) {
 	bot.removeListener('callback_query');
 	bot.removeListener('successful_payment');
 	bot.removeListener('pre_checkout_query');
@@ -22,13 +22,16 @@ async function pay(bot, chatId, text, user) {
 
 	bot.on('callback_query', async msg => {
 		const data = msg.data;
+		console.log(msg)
 		if (data == CRYSTAL_PRICE_100 || data == CRYSTAL_PRICE_200 || data == CRYSTAL_PRICE_400) {
-			bot.deleteMessage(chatId, message1.message_id)
-			Oplata(bot, chatId, data);
+			bot.deleteMessage(msg.from.id, message1.message_id)
+			Oplata(bot, msg.from.id, data, UserId);
 		}
 	});
 
 	bot.on('successful_payment', async (msg) => {
+		console.log(msg)
+		const user = msg.from.id
 		const selectedPrice = msg.successful_payment.total_amount;
 		let additionalCrystals = 0;
 		if (selectedPrice === 10000) {
@@ -41,10 +44,9 @@ async function pay(bot, chatId, text, user) {
 		console.log(additionalCrystals)
 		await User.update(
 			{ Crystal: sequelize.literal(`Crystal + ${additionalCrystals}`) },
-			{ where: { idTelegram: user.dataValues.idTelegram } }
+			{ where: { idTelegram: user } }
 		);
-		bot.sendMessage(chatId, 'Успешное пополнение!');
-		bot.removeListener('successful_payment');
+		bot.sendMessage(user, 'Успешное пополнение!');
 	});
 
 
@@ -73,24 +75,31 @@ async function pay(bot, chatId, text, user) {
 	});
 }
 
-async function Oplata(bot, chatId, priceNumber) {
-	try {
-		await bot.sendInvoice(chatId,
-			'Покупка кристаллов',
-			'Оплата выбранного товара',
-			'invoice',
-			process.env.YOOKASSA_API_KEY,
-			'RUB',
-			[
-				{
-					label: 'RUB',
-					amount: priceNumber
-				}
-			]);
-	} catch (e) {
-		console.log(e)
-		bot.sendMessage(chatId, "Произошла ошибка")
-	}
+async function Oplata(bot, chatId, priceNumber, UserId) {
+  try {
+    await bot.sendInvoice(chatId,
+      'Покупка кристаллов',
+      'Оплата выбранного товара',
+      'invoice',
+      process.env.YOOKASSA_API_KEY,
+      'RUB',
+      [
+        {
+          label: 'RUB',
+          amount: priceNumber
+        }
+      ],
+      {
+        // Передаем UserId в качестве пользовательского параметра
+        provider_data: {
+          UserId: UserId
+        }
+      },
+    );
+  } catch (e) {
+    console.log(e)
+    bot.sendMessage(chatId, "Произошла ошибка")
+  }
 }
 
 const Price = {
