@@ -22,7 +22,6 @@ async function pay(bot, chatId, text, UserId) {
 
 	bot.on('callback_query', async msg => {
 		const data = msg.data;
-		console.log(msg)
 		if (data == CRYSTAL_PRICE_100 || data == CRYSTAL_PRICE_200 || data == CRYSTAL_PRICE_400) {
 			bot.deleteMessage(msg.from.id, message1.message_id)
 			Oplata(bot, msg.from.id, data, UserId);
@@ -41,7 +40,6 @@ async function pay(bot, chatId, text, UserId) {
 		} else if (selectedPrice === 40000) {
 			additionalCrystals = 1000;
 		}
-		console.log(additionalCrystals)
 		await User.update(
 			{ Crystal: sequelize.literal(`Crystal + ${additionalCrystals}`) },
 			{ where: { idTelegram: user } }
