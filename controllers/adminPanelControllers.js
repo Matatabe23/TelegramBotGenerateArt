@@ -5,8 +5,8 @@ const { UserImages } = require('../models/models') // Импортируем м�
 class adminPanelController {
 	async GetListPhotos(req, res, next) {
 		try {
-			// const posts = await UserImages.findAll();
-			// res.send(posts);
+			const posts = await UserImages.findAll();
+			res.send(posts);
 		} catch (error) {
 			console.error(error);
 			res.status(500).send('Server Error');
