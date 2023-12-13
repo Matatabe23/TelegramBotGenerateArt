@@ -74,7 +74,7 @@ bot.on('message', async msg => {
 		Generate(bot, chatId, user, text);
 	}
 	else if (text === '/pay') {
-		pay(bot, chatId, text, user)
+		pay(bot, chatId, text, UserId)
 	}
 	else if (text === '/usagepolicy') {
 		usagePolicy(bot, chatId)
