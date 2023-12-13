@@ -6,12 +6,7 @@ const CRYSTAL_PRICE_100 = 10000;
 const CRYSTAL_PRICE_200 = 20000;
 const CRYSTAL_PRICE_400 = 40000;
 
-<<<<<<< HEAD
 async function pay(bot, chatId, text, user) {
-	console.log()
-=======
-async function pay(bot, chatId, text, UserId) {
->>>>>>> cc873869bd2309460f4867846644e424dd528f28
 	bot.removeListener('callback_query');
 	bot.removeListener('successful_payment');
 	bot.removeListener('pre_checkout_query');

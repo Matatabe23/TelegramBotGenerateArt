@@ -3,7 +3,7 @@ const fs = require('fs');
 const { UserSettings, User, UserImages } = require("../models/models")
 const sequelize = require('sequelize');
 
-const url = 'https://holara.ai/holara/api/external/1.0/generate_image';
+const url = process.env.URL_HOLARA_API;
 
 async function Generate(bot, chatId, user, text) {
 	const UserSett = await UserSettings.findOne({ where: { userId: user.dataValues.id } });
@@ -33,7 +33,7 @@ async function Generate(bot, chatId, user, text) {
 
 	const sentMessage = await bot.sendMessage(chatId, 'Загрузка...');
 
-	request.post({ url, form: data }, async (error, response, body) => {
+	request.post({ URL_HOLARA_API, form: data }, async (error, response, body) => {
 		if (error) {
 			console.error('Error:', error);
 		} else if (response.statusCode !== 200) {
