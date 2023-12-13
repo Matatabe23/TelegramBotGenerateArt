@@ -41,6 +41,7 @@ bot.on('message', async msg => {
 	const text = msg.text; //Текст
 
 	const user = await User.findOne({ where: { idTelegram: UserId } });
+	console.log(user)
 	if (!user) {
 		await User.create({
 			idTelegram: UserId,
