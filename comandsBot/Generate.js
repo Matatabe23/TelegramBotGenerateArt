@@ -33,7 +33,7 @@ async function Generate(bot, chatId, user, text) {
 
 	const sentMessage = await bot.sendMessage(chatId, 'Загрузка...');
 
-	request.post({ URL_HOLARA_API, form: data }, async (error, response, body) => {
+	request.post({ url, form: data }, async (error, response, body) => {
 		if (error) {
 			console.error('Error:', error);
 		} else if (response.statusCode !== 200) {
